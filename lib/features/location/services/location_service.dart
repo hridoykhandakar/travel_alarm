@@ -15,7 +15,12 @@ class LocationService {
     }
 
     // get current position
-    Position position = await Geolocator.getCurrentPosition();
+    Position position = await Geolocator.getCurrentPosition(
+      locationSettings: LocationSettings(
+        accuracy: LocationAccuracy.low,
+        distanceFilter: 1000,
+      ),
+    );
 
     // convert to placemark
     List<Placemark> placemarks = await placemarkFromCoordinates(

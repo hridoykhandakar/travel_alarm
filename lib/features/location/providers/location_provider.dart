@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:travel_alarm/features/location/services/location_ervice.dart';
+import 'package:travel_alarm/features/location/services/location_service.dart';
 
 final locationProvider =
     StateNotifierProvider<LocationNotifier, AsyncValue<String>>(

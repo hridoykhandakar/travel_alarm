@@ -17,20 +17,19 @@ class App extends ConsumerWidget {
       themeMode: ThemeMode.dark,
 
       theme: KAppTheme.darkTheme,
-      home:
-          // onboardingStatus.when(
-          //   loading: () => const SplashScreen(), // Show a neutral splash screen
-          //   error: (error, stack) =>
-          //       Center(child: Text("error")), // Show error screen
-          //   data: (hasCompletedOnboarding) {
-          //     return hasCompletedOnboarding
-          //         ? const LocationScreen()
-          //         : const OnboardingScreen();
-          //   },
-          // ),
-          // DemoScreen(),
-          // OnboardingScreen(),
-          LocationScreen(),
+      home: onboardingStatus.when(
+        loading: () => const SplashScreen(), // Show a neutral splash screen
+        error: (error, stack) =>
+            Center(child: Text("error")), // Show error screen
+        data: (hasCompletedOnboarding) {
+          return hasCompletedOnboarding
+              ? const LocationScreen()
+              : const OnboardingScreen();
+        },
+      ),
+      // OnboardingScreen(),
+      // LocationScreen(),
+      // SplashScreen(),
       // AlarmHomeScreen(),
     );
   }

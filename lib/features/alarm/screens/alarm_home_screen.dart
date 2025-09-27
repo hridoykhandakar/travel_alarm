@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -211,9 +210,19 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
           ),
         ),
 
-        floatingActionButton: FloatingActionButton(
-          onPressed: picTimeAndDateSetAlarm,
-          child: Icon(Icons.add),
+        floatingActionButton: SizedBox(
+          height: 66,
+          width: 66,
+          child: FloatingActionButton(
+            elevation: 0,
+
+            backgroundColor: AppColors.primary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusGeometry.circular(50),
+            ),
+            onPressed: picTimeAndDateSetAlarm,
+            child: Icon(Icons.add, size: 24),
+          ),
         ),
       ),
     );
