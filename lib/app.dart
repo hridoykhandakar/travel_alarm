@@ -29,8 +29,8 @@ class App extends ConsumerWidget {
           //   },
           // ),
           // DemoScreen(),
-          OnboardingScreen(),
-      // LocationScreen(),
+          // OnboardingScreen(),
+          LocationScreen(),
       // AlarmHomeScreen(),
     );
   }

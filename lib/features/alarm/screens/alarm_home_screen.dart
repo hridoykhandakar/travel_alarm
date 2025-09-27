@@ -6,6 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:travel_alarm/common_widgets/gradient_wrapper.dart';
 import 'package:travel_alarm/constants/icon_string.dart';
 import 'package:travel_alarm/constants/themes/app_colors.dart';
+import 'package:travel_alarm/features/alarm/widgets/alarm_title.dart';
+import 'package:travel_alarm/features/alarm/widgets/location_section.dart';
 import 'package:travel_alarm/helpers/format_time.dart';
 
 class AlarmHomeScreen extends StatefulWidget {
@@ -125,32 +127,13 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
                   color: AppColors.white.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(60),
                 ),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () async {},
-                      child: SvgPicture.asset(IconString.locationIcon),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      "Add your location",
-                      style: TextStyle(
-                        color: AppColors.white.withValues(alpha: 0.27),
-                        fontSize: 16,
-                        height: 1.5,
-                      ),
-                    ),
-                  ],
-                ),
+
+                child: LocationSection(),
               ),
               const SizedBox(height: 24),
 
               // Alarms
-              Text(
-                "Alarms",
-                style: TextStyle(fontSize: 18, height: 1.55),
-                textAlign: TextAlign.start,
-              ),
+              AlarmTitle(),
               const SizedBox(height: 16),
               alarms.isEmpty
                   ? Center(child: Text("No Alarms"))
