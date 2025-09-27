@@ -1,44 +1,39 @@
 import 'dart:io';
+import 'dart:ui';
+
 import 'package:alarm/alarm.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class AlarmService {
-  static final AlarmService _instance = AlarmService._internal();
-  factory AlarmService() => _instance;
-  AlarmService._internal();
-
-  /// Load all alarms from storage
+  // Get all Alarms
   Future<List<AlarmSettings>> getAlarms() async {
     try {
       return await Alarm.getAlarms();
     } catch (e) {
-      debugPrint('Error loading alarms: $e');
+      debugPrint("Error loading alarms : $e");
       rethrow;
     }
   }
 
-  /// Create and set a new alarm
+  //   Create New Alarms
   Future<void> setAlarm(
     DateTime dateTime, {
     String? title,
     String? body,
-    String? assetAudioPath,
   }) async {
     try {
-      final alarmSettings = _createAlarmSettings(
+      final alarmSettings = createAlarmSettings(
         dateTime,
         title: title,
         body: body,
-        assetAudioPath: assetAudioPath,
       );
-      await Alarm.set(alarmSettings: alarmSettings);
     } catch (e) {
-      debugPrint('Error setting alarm: $e');
+      debugPrint("Error to set a alarm: $e");
       rethrow;
     }
   }
 
-  /// Stop an alarm by ID
+  // Stop an alarm by ID
   Future<void> stopAlarm(int id) async {
     try {
       await Alarm.stop(id);
@@ -67,8 +62,7 @@ class AlarmService {
     return alarmDateTime.isAfter(DateTime.now());
   }
 
-  /// Create alarm settings with default configuration
-  AlarmSettings _createAlarmSettings(
+  AlarmSettings createAlarmSettings(
     DateTime dateTime, {
     String? title,
     String? body,
@@ -77,11 +71,15 @@ class AlarmService {
     return AlarmSettings(
       id: DateTime.now().millisecondsSinceEpoch % 100000,
       dateTime: dateTime,
-      assetAudioPath: assetAudioPath ?? 'assets/alarm.mp3',
+      assetAudioPath: 'assets/alarm.mp3',
       vibrate: true,
       warningNotificationOnKill: Platform.isIOS,
       androidFullScreenIntent: true,
-      volumeSettings: VolumeSettings.fade(fadeDuration: Duration(seconds: 5)),
+      volumeSettings: VolumeSettings.fade(
+        volume: 0.8,
+        fadeDuration: Duration(seconds: 5),
+        volumeEnforced: true,
+      ),
       notificationSettings: NotificationSettings(
         title: title ?? 'Travel Alarm',
         body: body ?? 'Time to wake up!',

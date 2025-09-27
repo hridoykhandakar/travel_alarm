@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:io';
+
 import 'package:alarm/alarm.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,13 +26,6 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
     // TODO: implement initState
     super.initState();
     loadAlarms();
-    setupAlarmListeners();
-  }
-
-  void setupAlarmListeners() {
-    Alarm.ringStream.stream.listen((alarmId) {
-      print("hello $alarmId is ended");
-    });
   }
 
   Future<void> loadAlarms() async {

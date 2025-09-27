@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 
-class DateTimePickerService {
-  /// Show date and time picker and return selected DateTime
-  static Future<DateTime?> pickDateTime(BuildContext context) async {
+class DatetimePickerService {
+  static Future<DateTime?> picDateTime(BuildContext context) async {
     try {
-      // Pick date first
-      final pickedDate = await _pickDate(context);
+      final pickedDate = await pickDate(context);
       if (pickedDate == null) return null;
-
-      // Pick time
-      final pickedTime = await _pickTime(context);
+      final pickedTime = await pickTime(context);
       if (pickedTime == null) return null;
 
-      // Combine date and time
       return DateTime(
         pickedDate.year,
         pickedDate.month,
@@ -27,7 +22,7 @@ class DateTimePickerService {
   }
 
   /// Show date picker
-  static Future<DateTime?> _pickDate(BuildContext context) async {
+  static Future<DateTime?> pickDate(BuildContext context) async {
     return await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -46,8 +41,8 @@ class DateTimePickerService {
     );
   }
 
-  /// Show time picker
-  static Future<TimeOfDay?> _pickTime(BuildContext context) async {
+  // Show time picker
+  static Future<TimeOfDay?> pickTime(BuildContext context) async {
     return await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
@@ -64,7 +59,7 @@ class DateTimePickerService {
     );
   }
 
-  /// Validate if the selected date/time is in the future
+  // Validate if the selected date/time is in the future
   static bool isValidDateTime(DateTime dateTime) {
     return dateTime.isAfter(DateTime.now());
   }
