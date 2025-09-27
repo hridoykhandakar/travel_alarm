@@ -13,7 +13,7 @@ class LocationScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final locationState = ref.watch(locationProvider);
+    // final locationState = ref.watch(locationProvider);
     return GradientWrapper(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -83,7 +83,7 @@ class LocationScreen extends ConsumerWidget {
                   PrimaryButton(
                     label: "Home",
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => AlarmHomeScreen(),
