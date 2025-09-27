@@ -41,29 +41,38 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
   }
 
   Future<void> setAlarm(DateTime dateTime) async {
-    final AlarmSettings alarmSettings = AlarmSettings(
-      id: DateTime.now().millisecondsSinceEpoch % 100000,
-      dateTime: dateTime,
-      assetAudioPath: 'assets/alarm.mp3',
-      vibrate: true,
-      warningNotificationOnKill: Platform.isIOS,
-      androidFullScreenIntent: true,
-      volumeSettings: VolumeSettings.fade(
-        volume: 0.8,
-        fadeDuration: Duration(seconds: 5),
-        volumeEnforced: true,
-      ),
-      notificationSettings: const NotificationSettings(
-        title: 'This is the title',
-        body: 'This is the body',
-        stopButton: 'Stop the alarm',
-        icon: 'notification_icon',
-        iconColor: Color(0xff862778),
-      ),
-    );
+    try {
+      if (dateTime.isBefore(DateTime.now())) {
+        throw Exception('Cannot set alarm in the past');
+      }
+      final AlarmSettings alarmSettings = AlarmSettings(
+        id: DateTime.now().millisecondsSinceEpoch % 100000,
+        dateTime: dateTime,
+        assetAudioPath: 'assets/alarm.mp3',
+        vibrate: true,
+        warningNotificationOnKill: Platform.isIOS,
+        androidFullScreenIntent: true,
+        volumeSettings: VolumeSettings.fade(
+          volume: 0.8,
+          fadeDuration: Duration(seconds: 5),
+          volumeEnforced: true,
+        ),
+        notificationSettings: const NotificationSettings(
+          title: 'This is the title',
+          body: 'This is the body',
+          stopButton: 'Stop the alarm',
+          icon: 'notification_icon',
+          iconColor: Color(0xff862778),
+        ),
+      );
 
-    await Alarm.set(alarmSettings: alarmSettings);
-    await loadAlarms();
+      await Alarm.set(alarmSettings: alarmSettings);
+      await loadAlarms();
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to set alarm: ${e.toString()}')),
+      );
+    }
   }
 
   Future<void> stopAlarm(int id) async {
@@ -210,18 +219,21 @@ class _AlarmHomeScreenState extends State<AlarmHomeScreen> {
           ),
         ),
 
-        floatingActionButton: SizedBox(
-          height: 66,
-          width: 66,
-          child: FloatingActionButton(
-            elevation: 0,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.only(bottom: 80),
+          child: SizedBox(
+            height: 66,
+            width: 66,
+            child: FloatingActionButton(
+              elevation: 0,
 
-            backgroundColor: AppColors.primary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadiusGeometry.circular(50),
+              backgroundColor: AppColors.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.circular(50),
+              ),
+              onPressed: picTimeAndDateSetAlarm,
+              child: Icon(Icons.add, size: 24),
             ),
-            onPressed: picTimeAndDateSetAlarm,
-            child: Icon(Icons.add, size: 24),
           ),
         ),
       ),
